@@ -23,7 +23,7 @@ public class test_08 {
 		taxByDeduction = deductionSection(inputIncome);
 		
 		System.out.println();
-		System.out.println("[세율에 의한 세금]:　　　　　　" + String.format("%10d", taxByRate));
+		System.out.println("[세율에 의한 세금]:  　　　　" + String.format("%10d", taxByRate));
 		System.out.println("[누진공제 계산에 의한 세금]: " + String.format("%10d", taxByDeduction));
 	}
 	

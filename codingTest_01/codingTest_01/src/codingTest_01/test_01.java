@@ -17,7 +17,7 @@ public class test_01 {
              String Y = String.format("%2d", y).replace(" ", "0");
              String Mul = String.format("%2d", mul).replace(" ", "0");
              
-             if(j >= 9) {
+             if(j == 9) {
             	 System.out.println(X + " x " + Y + " = " + Mul + "   ");	 
              }else {
             	 System.out.print(X + " x " + Y + " = " + Mul + "   ");
