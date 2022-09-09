@@ -36,107 +36,95 @@ public class test_08 {
 	
 	//세율에 의한 세금 리턴 함수
 	static long rateSection(long annualIncome) {
-		
-		//구간별 과세표준액 최대값
-		long incomeA = incomeSectionArray[0];
-		long incomeB = incomeSectionArray[1]-incomeA;
-		long incomeC = incomeSectionArray[2]-incomeA-incomeB;
-		long incomeD = incomeSectionArray[3]-incomeA-incomeB-incomeC;
-		long incomeE = incomeSectionArray[4]-incomeA-incomeB-incomeC-incomeD;
-		long incomeF = incomeSectionArray[5]-incomeA-incomeB-incomeC-incomeD-incomeE;
-		long incomeG = incomeSectionArray[6]-incomeA-incomeB-incomeC-incomeD-incomeE-incomeF;
 
-		//구간별 세금 최대값
-		long taxA = incomeA * taxRateArray[0] /100;
-		long taxB = incomeB * taxRateArray[1] /100;
-		long taxC = incomeC * taxRateArray[2] /100;
-		long taxD = incomeD * taxRateArray[3] /100;
-		long taxE = incomeE * taxRateArray[4] /100;
-		long taxF = incomeF * taxRateArray[5] /100;
-		long taxG = incomeG * taxRateArray[6] /100;
-		
-		//구간별 최고세율 잔액
-		long lastIncomeA = annualIncome;
-		long lastIncomeB = annualIncome-incomeA;
-		long lastIncomeC = annualIncome-incomeA-incomeB;
-		long lastIncomeD = annualIncome-incomeA-incomeB-incomeC;
-		long lastIncomeE = annualIncome-incomeA-incomeB-incomeC-incomeD;
-		long lastIncomeF = annualIncome-incomeA-incomeB-incomeC-incomeD-incomeE;
-		long lastIncomeG = annualIncome-incomeA-incomeB-incomeC-incomeD-incomeE-incomeF;
-		long lastIncomeH = annualIncome-incomeA-incomeB-incomeC-incomeD-incomeE-incomeF-incomeG;
-		
-		//구간별 최고세율 잔액에 대한 세금
-		long LastTaxA = lastIncomeA * taxRateArray[0] /100;
-		long LastTaxB = lastIncomeB * taxRateArray[1] /100;
-		long LastTaxC = lastIncomeC * taxRateArray[2] /100;
-		long LastTaxD = lastIncomeD * taxRateArray[3] /100;
-		long LastTaxE = lastIncomeE * taxRateArray[4] /100;
-		long LastTaxF = lastIncomeF * taxRateArray[5] /100;
-		long LastTaxG = lastIncomeG * taxRateArray[6] /100;
-		long LastTaxH = lastIncomeH * taxRateArray[7] /100;
-		
+		//구간별 과세표준액 최대값 배열
+		long[] sectionStandard = new long[7];
+		for(int i=0; i<7; i++){
+			sectionStandard[i] = incomeSectionArray[i];
+			if (i>0) sectionStandard[i] = incomeSectionArray[i] - incomeSectionArray[i-1];
+		}
+
+		//구간별 세금 최대값 배열
+		long[] taxMaxArray = new long[7];
+		for(int i=0; i<7; i++){
+			taxMaxArray[i] = sectionStandard[i] * taxRateArray[i] /100;
+		}
+
+		//구간별 최고세율 잔액 배열
+		long[] lastIncomeArray = new long[8];
+		for(int i=0; i<8; i++){
+			lastIncomeArray[i] = annualIncome;
+			if (i>0) lastIncomeArray[i] = annualIncome - incomeSectionArray[i-1];
+		}
+
+		//구간별 최고세율 잔액에 대한 세금 배열
+		long[] LastTaxArray = new long[8];
+		for(int i=0; i<8; i++){
+			LastTaxArray[i] = lastIncomeArray[i] * taxRateArray[i] /100;
+		}
+
 		//세금 총액
 		long totalTax = 0;
 		
 		if(annualIncome <= incomeSectionArray[0]) {
-			System.out.println(String.format("%10d", lastIncomeA) + " * " + String.format("%2d", taxRateArray[0]) + "% = " + String.format("%10d", LastTaxA));
-			totalTax = LastTaxA;
+			System.out.println(String.format("%10d", lastIncomeArray[0]) + " * " + String.format("%2d", taxRateArray[0]) + "% = " + String.format("%10d", LastTaxArray[0]));
+			totalTax = LastTaxArray[0];
 		} 
 		else if(annualIncome <= incomeSectionArray[1]) {
-			System.out.println(String.format("%10d", incomeA) + " * " + String.format("%2d", taxRateArray[0]) + "% = " + String.format("%10d", taxA));
-			System.out.println(String.format("%10d", lastIncomeB) + " * " + String.format("%2d", taxRateArray[1]) + "% = " + String.format("%10d", LastTaxB));
-			totalTax = taxA + LastTaxB;
+			System.out.println(String.format("%10d", incomeSectionArray[0]) + " * " + String.format("%2d", taxRateArray[0]) + "% = " + String.format("%10d", taxMaxArray[0]));
+			System.out.println(String.format("%10d", lastIncomeArray[1]) + " * " + String.format("%2d", taxRateArray[1]) + "% = " + String.format("%10d", LastTaxArray[1]));
+			totalTax = taxMaxArray[0] + LastTaxArray[1];
 		}
 		else if(annualIncome <= incomeSectionArray[2]) {
-			System.out.println(String.format("%10d", incomeA) + " * " + String.format("%2d", taxRateArray[0]) + "% = " + String.format("%10d", taxA));
-			System.out.println(String.format("%10d", incomeB) + " * " + String.format("%2d", taxRateArray[1]) + "% = " + String.format("%10d", taxB));
-			System.out.println(String.format("%10d", lastIncomeC) + " * " + String.format("%2d", taxRateArray[2]) + "% = " + String.format("%10d", LastTaxC));
-			totalTax = taxA + taxB + LastTaxC;
+			System.out.println(String.format("%10d", incomeSectionArray[0]) + " * " + String.format("%2d", taxRateArray[0]) + "% = " + String.format("%10d", taxMaxArray[0]));
+			System.out.println(String.format("%10d", incomeSectionArray[1]) + " * " + String.format("%2d", taxRateArray[1]) + "% = " + String.format("%10d", taxMaxArray[1]));
+			System.out.println(String.format("%10d", lastIncomeArray[2]) + " * " + String.format("%2d", taxRateArray[2]) + "% = " + String.format("%10d", LastTaxArray[2]));
+			totalTax = taxMaxArray[0] + taxMaxArray[1] + LastTaxArray[2];
 		}
 		else if(annualIncome <= incomeSectionArray[3]) {
-			System.out.println(String.format("%10d", incomeA) + " * " + String.format("%2d", taxRateArray[0]) + "% = " + String.format("%10d", taxA));
-			System.out.println(String.format("%10d", incomeB) + " * " + String.format("%2d", taxRateArray[1]) + "% = " + String.format("%10d", taxB));
-			System.out.println(String.format("%10d", incomeC) + " * " + String.format("%2d", taxRateArray[2]) + "% = " + String.format("%10d", taxC));
-			System.out.println(String.format("%10d", lastIncomeD) + " * " + String.format("%2d", taxRateArray[3]) + "% = " + String.format("%10d", LastTaxD));
-			totalTax = taxA + taxB + taxC + LastTaxD;
+			System.out.println(String.format("%10d", incomeSectionArray[0]) + " * " + String.format("%2d", taxRateArray[0]) + "% = " + String.format("%10d", taxMaxArray[0]));
+			System.out.println(String.format("%10d", incomeSectionArray[1]) + " * " + String.format("%2d", taxRateArray[1]) + "% = " + String.format("%10d", taxMaxArray[1]));
+			System.out.println(String.format("%10d", incomeSectionArray[2]) + " * " + String.format("%2d", taxRateArray[2]) + "% = " + String.format("%10d", taxMaxArray[2]));
+			System.out.println(String.format("%10d", lastIncomeArray[3]) + " * " + String.format("%2d", taxRateArray[3]) + "% = " + String.format("%10d", LastTaxArray[3]));
+			totalTax = taxMaxArray[0] + taxMaxArray[1] + taxMaxArray[2] + LastTaxArray[3];
 		}
 		else if(annualIncome <= incomeSectionArray[4]) {
-			System.out.println(String.format("%10d", incomeA) + " * " + String.format("%2d", taxRateArray[0]) + "% = " + String.format("%10d", taxA));
-			System.out.println(String.format("%10d", incomeB) + " * " + String.format("%2d", taxRateArray[1]) + "% = " + String.format("%10d", taxB));
-			System.out.println(String.format("%10d", incomeC) + " * " + String.format("%2d", taxRateArray[2]) + "% = " + String.format("%10d", taxC));
-			System.out.println(String.format("%10d", incomeD) + " * " + String.format("%2d", taxRateArray[3]) + "% = " + String.format("%10d", taxD));
-			System.out.println(String.format("%10d", lastIncomeE) + " * " + String.format("%2d", taxRateArray[4]) + "% = " + String.format("%10d", LastTaxE));
-			totalTax = taxA + taxB + taxC + taxD + LastTaxE;
+			System.out.println(String.format("%10d", incomeSectionArray[0]) + " * " + String.format("%2d", taxRateArray[0]) + "% = " + String.format("%10d", taxMaxArray[0]));
+			System.out.println(String.format("%10d", incomeSectionArray[1]) + " * " + String.format("%2d", taxRateArray[1]) + "% = " + String.format("%10d", taxMaxArray[1]));
+			System.out.println(String.format("%10d", incomeSectionArray[2]) + " * " + String.format("%2d", taxRateArray[2]) + "% = " + String.format("%10d", taxMaxArray[2]));
+			System.out.println(String.format("%10d", incomeSectionArray[3]) + " * " + String.format("%2d", taxRateArray[3]) + "% = " + String.format("%10d", taxMaxArray[3]));
+			System.out.println(String.format("%10d", lastIncomeArray[4]) + " * " + String.format("%2d", taxRateArray[4]) + "% = " + String.format("%10d", LastTaxArray[4]));
+			totalTax = taxMaxArray[0] + taxMaxArray[1] + taxMaxArray[2] + taxMaxArray[3] + LastTaxArray[4];
 		}
 		else if(annualIncome <= incomeSectionArray[5]) {
-			System.out.println(String.format("%10d", incomeA) + " * " + String.format("%2d", taxRateArray[0]) + "% = " + String.format("%10d", taxA));
-			System.out.println(String.format("%10d", incomeB) + " * " + String.format("%2d", taxRateArray[1]) + "% = " + String.format("%10d", taxB));
-			System.out.println(String.format("%10d", incomeC) + " * " + String.format("%2d", taxRateArray[2]) + "% = " + String.format("%10d", taxC));
-			System.out.println(String.format("%10d", incomeD) + " * " + String.format("%2d", taxRateArray[3]) + "% = " + String.format("%10d", taxD));
-			System.out.println(String.format("%10d", incomeE) + " * " + String.format("%2d", taxRateArray[4]) + "% = " + String.format("%10d", taxE));
-			System.out.println(String.format("%10d", lastIncomeF) + " * " + String.format("%2d", taxRateArray[5]) + "% = " + String.format("%10d", LastTaxF));
-			totalTax = taxA + taxB + taxC + taxD + taxD + LastTaxF;
+			System.out.println(String.format("%10d", incomeSectionArray[0]) + " * " + String.format("%2d", taxRateArray[0]) + "% = " + String.format("%10d", taxMaxArray[0]));
+			System.out.println(String.format("%10d", incomeSectionArray[1]) + " * " + String.format("%2d", taxRateArray[1]) + "% = " + String.format("%10d", taxMaxArray[1]));
+			System.out.println(String.format("%10d", incomeSectionArray[2]) + " * " + String.format("%2d", taxRateArray[2]) + "% = " + String.format("%10d", taxMaxArray[2]));
+			System.out.println(String.format("%10d", incomeSectionArray[3]) + " * " + String.format("%2d", taxRateArray[3]) + "% = " + String.format("%10d", taxMaxArray[3]));
+			System.out.println(String.format("%10d", incomeSectionArray[4]) + " * " + String.format("%2d", taxRateArray[4]) + "% = " + String.format("%10d", taxMaxArray[4]));
+			System.out.println(String.format("%10d", lastIncomeArray[5]) + " * " + String.format("%2d", taxRateArray[5]) + "% = " + String.format("%10d", LastTaxArray[5]));
+			totalTax = taxMaxArray[0] + taxMaxArray[1] + taxMaxArray[2] + taxMaxArray[3] + taxMaxArray[4] + LastTaxArray[5];
 		}
 		else if(annualIncome <= incomeSectionArray[6]) {
-			System.out.println(String.format("%10d", incomeA) + " * " + String.format("%2d", taxRateArray[0]) + "% = " + String.format("%10d", taxA));
-			System.out.println(String.format("%10d", incomeB) + " * " + String.format("%2d", taxRateArray[1]) + "% = " + String.format("%10d", taxB));
-			System.out.println(String.format("%10d", incomeC) + " * " + String.format("%2d", taxRateArray[2]) + "% = " + String.format("%10d", taxC));
-			System.out.println(String.format("%10d", incomeD) + " * " + String.format("%2d", taxRateArray[3]) + "% = " + String.format("%10d", taxD));
-			System.out.println(String.format("%10d", incomeE) + " * " + String.format("%2d", taxRateArray[4]) + "% = " + String.format("%10d", taxE));
-			System.out.println(String.format("%10d", incomeF) + " * " + String.format("%2d", taxRateArray[5]) + "% = " + String.format("%10d", taxF));
-			System.out.println(String.format("%10d", lastIncomeG) + " * " + String.format("%2d", taxRateArray[6]) + "% = " + String.format("%10d", LastTaxG));
-			totalTax = taxA + taxB + taxC + taxD + taxE + taxF + LastTaxG;
+			System.out.println(String.format("%10d", incomeSectionArray[0]) + " * " + String.format("%2d", taxRateArray[0]) + "% = " + String.format("%10d", taxMaxArray[0]));
+			System.out.println(String.format("%10d", incomeSectionArray[1]) + " * " + String.format("%2d", taxRateArray[1]) + "% = " + String.format("%10d", taxMaxArray[1]));
+			System.out.println(String.format("%10d", incomeSectionArray[2]) + " * " + String.format("%2d", taxRateArray[2]) + "% = " + String.format("%10d", taxMaxArray[2]));
+			System.out.println(String.format("%10d", incomeSectionArray[3]) + " * " + String.format("%2d", taxRateArray[3]) + "% = " + String.format("%10d", taxMaxArray[3]));
+			System.out.println(String.format("%10d", incomeSectionArray[4]) + " * " + String.format("%2d", taxRateArray[4]) + "% = " + String.format("%10d", taxMaxArray[4]));
+			System.out.println(String.format("%10d", incomeSectionArray[5]) + " * " + String.format("%2d", taxRateArray[5]) + "% = " + String.format("%10d", taxMaxArray[5]));
+			System.out.println(String.format("%10d", lastIncomeArray[6]) + " * " + String.format("%2d", taxRateArray[6]) + "% = " + String.format("%10d", LastTaxArray[6]));
+			totalTax = taxMaxArray[0] + taxMaxArray[1] + taxMaxArray[2] + taxMaxArray[3] + taxMaxArray[4] + taxMaxArray[5] + LastTaxArray[6];
 		}
 		else {
-			System.out.println(String.format("%10d", incomeA) + " * " + String.format("%2d", taxRateArray[0]) + "% = " + String.format("%10d", taxA));
-			System.out.println(String.format("%10d", incomeB) + " * " + String.format("%2d", taxRateArray[1]) + "% = " + String.format("%10d", taxB));
-			System.out.println(String.format("%10d", incomeC) + " * " + String.format("%2d", taxRateArray[2]) + "% = " + String.format("%10d", taxC));
-			System.out.println(String.format("%10d", incomeD) + " * " + String.format("%2d", taxRateArray[3]) + "% = " + String.format("%10d", taxD));
-			System.out.println(String.format("%10d", incomeE) + " * " + String.format("%2d", taxRateArray[4]) + "% = " + String.format("%10d", taxE));
-			System.out.println(String.format("%10d", incomeF) + " * " + String.format("%2d", taxRateArray[5]) + "% = " + String.format("%10d", taxF));
-			System.out.println(String.format("%10d", incomeG) + " * " + String.format("%2d", taxRateArray[6]) + "% = " + String.format("%10d", taxG));
-			System.out.println(String.format("%10d", lastIncomeH) + " * " + String.format("%2d", taxRateArray[7]) + "% = " + String.format("%10d", LastTaxH));
-			totalTax = taxA + taxB + taxC + taxD + taxE + taxF + taxG + LastTaxH;
+			System.out.println(String.format("%10d", incomeSectionArray[0]) + " * " + String.format("%2d", taxRateArray[0]) + "% = " + String.format("%10d", taxMaxArray[0]));
+			System.out.println(String.format("%10d", incomeSectionArray[1]) + " * " + String.format("%2d", taxRateArray[1]) + "% = " + String.format("%10d", taxMaxArray[1]));
+			System.out.println(String.format("%10d", incomeSectionArray[2]) + " * " + String.format("%2d", taxRateArray[2]) + "% = " + String.format("%10d", taxMaxArray[2]));
+			System.out.println(String.format("%10d", incomeSectionArray[3]) + " * " + String.format("%2d", taxRateArray[3]) + "% = " + String.format("%10d", taxMaxArray[3]));
+			System.out.println(String.format("%10d", incomeSectionArray[4]) + " * " + String.format("%2d", taxRateArray[4]) + "% = " + String.format("%10d", taxMaxArray[4]));
+			System.out.println(String.format("%10d", incomeSectionArray[5]) + " * " + String.format("%2d", taxRateArray[5]) + "% = " + String.format("%10d", taxMaxArray[5]));
+			System.out.println(String.format("%10d", incomeSectionArray[6]) + " * " + String.format("%2d", taxRateArray[6]) + "% = " + String.format("%10d", taxMaxArray[6]));
+			System.out.println(String.format("%10d", lastIncomeArray[7]) + " * " + String.format("%2d", taxRateArray[7]) + "% = " + String.format("%10d", LastTaxArray[7]));
+			totalTax = taxMaxArray[0] + taxMaxArray[1] + taxMaxArray[2] + taxMaxArray[3] + taxMaxArray[4] + taxMaxArray[5] + taxMaxArray[6] + LastTaxArray[7];
 		}
 		
 		//세금 총액
