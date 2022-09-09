@@ -26,6 +26,17 @@ public class test_08 {
 		System.out.println("[세율에 의한 세금]:  　　　　" + String.format("%10d", taxByRate));
 		System.out.println("[누진공제 계산에 의한 세금]: " + String.format("%10d", taxByDeduction));
 	}
+
+	//필드 생성 (세율과 누진공제 계산에 각각 활용하기 위한 항목)
+	//구간별 세율 필드
+	static int taxRateA = 6;
+	static int taxRateB = 15;
+	static int taxRateC = 24;
+	static int taxRateD = 35;
+	static int taxRateE = 38;
+	static int taxRateF = 40;
+	static int taxRateG = 42;
+	static int taxRateH = 45;
 	
 	//세율에 의한 세금 리턴 함수
 	static long rateSection(long annualIncome) {
@@ -39,17 +50,7 @@ public class test_08 {
 		long incomeF = 500000000-incomeA-incomeB-incomeC-incomeD-incomeE;
 		long incomeG = 1000000000-incomeA-incomeB-incomeC-incomeD-incomeE-incomeF;
 		long incomeH = 0;
-		
-		//구간별 세율
-		int taxRateA = 6;
-		int taxRateB = 15;
-		int taxRateC = 24;
-		int taxRateD = 35;
-		int taxRateE = 38;
-		int taxRateF = 40;
-		int taxRateG = 42;
-		int taxRateH = 45;
-		
+
 		//구간별 세금
 		long taxA = incomeA * taxRateA /100;
 		long taxB = incomeB * taxRateB /100;
@@ -150,17 +151,7 @@ public class test_08 {
 	
 	//누진공제 계산에 의한 세금 리턴 함수
 	static long deductionSection(long annualIncome) {
-		
-		//구간별 세율
-		int taxRateA = 6;
-		int taxRateB = 15;
-		int taxRateC = 24;
-		int taxRateD = 35;
-		int taxRateE = 38;
-		int taxRateF = 40;
-		int taxRateG = 42;
-		int taxRateH = 45;
-		
+
 		//구간별 누진공제전 세액
 		long taxBeforeDeductionA = annualIncome * taxRateA / 100;
 		long taxBeforeDeductionB = annualIncome * taxRateB / 100;
