@@ -9,7 +9,7 @@ public class test_08 {
 		System.out.println("[과세금액 계산 프로그램]");
 		System.out.print("연소득을 입력해 주세요.:");
 		Scanner scan = new Scanner(System.in);
-		
+
 		//연소득
 		long inputIncome = scan.nextLong();
 		scan.close();
@@ -33,7 +33,9 @@ public class test_08 {
 	static long[] incomeSectionArray = {12000000, 46000000, 88000000, 150000000, 300000000, 500000000, 1000000000};
 	//구간별 세율 배열
 	static int[] taxRateArray = {6, 15, 24, 35, 38, 40, 42,45};
-	
+	// 구간별 누진공제액 배열
+	static long[] deductionArray = {0, 1080000, 5220000, 14900000, 19400000, 25400000, 35400000,65400000};
+
 	//세율에 의한 세금 리턴 함수
 	static long rateSection(long annualIncome) {
 
@@ -134,28 +136,18 @@ public class test_08 {
 	//누진공제 계산에 의한 세금 리턴 함수
 	static long deductionSection(long annualIncome) {
 
-		//구간별 누진공제액
-		long deductionA = 0;
-		long deductionB = 1080000;
-		long deductionC = 5220000;
-		long deductionD = 14900000;
-		long deductionE = 19400000;
-		long deductionF = 25400000;
-		long deductionG = 35400000;
-		long deductionH = 65400000;
-
 		//세금 총액 선언
-		long totalTax = 0;
+		long totalTax;
 
 		//구간별 누진공제 세금 총액
-		if(annualIncome <= incomeSectionArray[0]) totalTax = annualIncome * taxRateArray[0] / 100 - deductionA;
-		else if(annualIncome <= incomeSectionArray[1]) totalTax = annualIncome * taxRateArray[1] / 100 - deductionB;
-		else if(annualIncome <= incomeSectionArray[2]) totalTax = annualIncome * taxRateArray[2] / 100 - deductionC;
-		else if(annualIncome <= incomeSectionArray[3]) totalTax = annualIncome * taxRateArray[3] / 100 - deductionD;
-		else if(annualIncome <= incomeSectionArray[4]) totalTax = annualIncome * taxRateArray[4] / 100 - deductionE;
-		else if(annualIncome <= incomeSectionArray[5]) totalTax = annualIncome * taxRateArray[5] / 100 - deductionF;
-		else if(annualIncome <= incomeSectionArray[6]) totalTax = annualIncome * taxRateArray[6] / 100 - deductionG;
-		else  totalTax = annualIncome * taxRateArray[7] / 100 - deductionH;
+		if(annualIncome <= incomeSectionArray[0]) totalTax = annualIncome * taxRateArray[0] / 100 - deductionArray[0];
+		else if(annualIncome <= incomeSectionArray[1]) totalTax = annualIncome * taxRateArray[1] / 100 - deductionArray[1];
+		else if(annualIncome <= incomeSectionArray[2]) totalTax = annualIncome * taxRateArray[2] / 100 - deductionArray[2];
+		else if(annualIncome <= incomeSectionArray[3]) totalTax = annualIncome * taxRateArray[3] / 100 - deductionArray[3];
+		else if(annualIncome <= incomeSectionArray[4]) totalTax = annualIncome * taxRateArray[4] / 100 - deductionArray[4];
+		else if(annualIncome <= incomeSectionArray[5]) totalTax = annualIncome * taxRateArray[5] / 100 - deductionArray[5];
+		else if(annualIncome <= incomeSectionArray[6]) totalTax = annualIncome * taxRateArray[6] / 100 - deductionArray[6];
+		else  totalTax = annualIncome * taxRateArray[7] / 100 - deductionArray[7];
 
 		//세금 총액 반환
 		return totalTax;
