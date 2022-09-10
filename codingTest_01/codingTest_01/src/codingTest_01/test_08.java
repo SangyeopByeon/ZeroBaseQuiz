@@ -33,31 +33,31 @@ public class test_08 {
 	//세율에 의한 세금 리턴 함수
 	static long rateSection(long annualIncome) {
 		//구간별 과세표준액 최대값 배열
-		long[] sectionStandard = new long[7];
-		for(int i=0; i<7; i++){
+		long[] sectionStandard = new long[incomeSectionArray.length];
+		for(int i=0; i<incomeSectionArray.length; i++){
 			sectionStandard[i] = incomeSectionArray[i];
 			if (i>0) sectionStandard[i] = incomeSectionArray[i] - incomeSectionArray[i-1];
 		}
 		//구간별 세금 최대값 배열
-		long[] taxMaxArray = new long[7];
-		for(int i=0; i<7; i++){
+		long[] taxMaxArray = new long[incomeSectionArray.length];
+		for(int i=0; i<incomeSectionArray.length; i++){
 			taxMaxArray[i] = sectionStandard[i] * taxRateArray[i] /100;
 		}
 		//구간별 최고세율 잔액 배열
-		long[] lastIncomeArray = new long[8];
-		for(int i=0; i<8; i++){
+		long[] lastIncomeArray = new long[incomeSectionArray.length + 1];
+		for(int i=0; i<incomeSectionArray.length + 1; i++){
 			lastIncomeArray[i] = annualIncome;
 			if (i>0) lastIncomeArray[i] = annualIncome - incomeSectionArray[i-1];
 		}
 		//구간별 최고세율 잔액에 대한 세금 배열
-		long[] LastTaxArray = new long[8];
-		for(int i=0; i<8; i++){
+		long[] LastTaxArray = new long[taxRateArray.length];
+		for(int i=0; i<taxRateArray.length; i++){
 			LastTaxArray[i] = lastIncomeArray[i] * taxRateArray[i] /100;
 		}
 		//세금 총액
 		long totalTax = 0;
 		//구간별 세율 계산
-		for(int i=0; i<8; i++){
+		for(int i=0; i<incomeSectionArray.length + 1; i++){
 			if(annualIncome <= incomeSectionArray[i]){
 				for(int j=0; j<i; j++) {
 					System.out.println(String.format("%10d", sectionStandard[j]) + " * " + String.format("%2d", taxRateArray[j]) + "% = " + String.format("%10d", taxMaxArray[j]));
@@ -78,7 +78,7 @@ public class test_08 {
 	static long deductionSection(long annualIncome) {
 		//세금 총액 선언
 		long totalTax = 0;
-		for(int i=0; i<8; i++){
+		for(int i=0; i<incomeSectionArray.length + 1; i++){
 			if(annualIncome <= incomeSectionArray[i]) {
 				totalTax = annualIncome * taxRateArray[i] / 100 - deductionArray[i];
 				break;
