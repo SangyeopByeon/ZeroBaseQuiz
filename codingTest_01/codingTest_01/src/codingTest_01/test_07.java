@@ -6,84 +6,89 @@ import java.util.Scanner;
 public class test_07 {
 
 	public static void main(String[] args) {
-		
+
+		//0. 구매 수량 입력 틀
 		System.out.println("[로또 당첨 프로그램]");
+		System.out.println();
 		System.out.print("로또 개수를 입력해 주세요.(숫자 1 ~ 10):");
-		
-		//로또 구매
+
+		// 1. 구매 수량입력
 		Scanner scan = new Scanner(System.in);
 		int scanCount = scan.nextInt();
 		scan.close();
-		
-		//로또 생성
-		for(int j = 0; j < scanCount; j++) {
-			String[] lottoArray = new String[6];
-			for(int i = 0; i < 6;) {
+
+		// 2. 로또 발행 전 출력 틀 제작
+		String[] lottoTitle = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
+		String[][] MyLotto = new String[scanCount][6];
+
+		// 3. 로또 발행
+		for (int i = 0; i < scanCount; i++) {
+			// 3-(1) 로또 번호 제작
+			for (int j = 1; j < 7; ) {
 				Random random = new Random();
-				int block = random.nextInt(45);
-				if(block == 0) continue;
-				String blockNumber = String.format("%02d", block); 
-				lottoArray[i] = blockNumber;
-				i++;
+				int emSpaceInt = random.nextInt(45);
+				String emSpace = String.format("%02d", emSpaceInt);
+				if (emSpace.equals("0")) continue;
+				MyLotto[i][j - 1] = emSpace;
+				j++;
 			}
-			System.out.print("A" + "   ");
-			for(int i = 0; i < 6; i++) {
-				if(i == 5) System.out.println(lottoArray[i]);
-				else System.out.print(lottoArray[i] + ",");
+			// 3-(2) 로또 순서 알파벳 출력
+			System.out.print(lottoTitle[i] + "   ");
+			// 3-(3) 로또 번호 출력
+			for (int j = 0; j < 6; j++) {
+				if (j == 5) System.out.println(MyLotto[i][j]);
+				else System.out.print(MyLotto[i][j] + ",");
 			}
 		}
-		
-		
-		//로또 발표
-		System.out.println();
-		System.out.println("[로또 발표]");
-		String[] lottoResult = new String[6];
-		for(int i = 0; i < 6;) {
+
+		// 4. 당첨번호 출력 틀 제작
+		String[] resultLotto = new String[6];
+
+		// 5. 당첨번호 제작
+		for (int i = 0; i < 6; ) {
 			Random random = new Random();
-			int blockResult = random.nextInt(45);
-			if(blockResult == 0) continue;
-			String blockResultNumber = String.format("%02d", blockResult); 
-			lottoResult[i] = blockResultNumber;
+			int emSpaceInt = random.nextInt(45);
+			String emSpace = String.format("%02d", emSpaceInt);
+			if (emSpace.equals("0")) continue;
+			resultLotto[i] = emSpace;
 			i++;
 		}
-		System.out.print(" " + "   ");
-		for(int i = 0; i < 6; i++) {
-			if(i == 5) System.out.println(lottoResult[i]);
-			else System.out.print(lottoResult[i] + ",");
-			
+		// 6. 당첨번호 출력
+		System.out.println();
+		System.out.println("[로또 발표]");
+		System.out.print("    ");
+		for (int i = 0; i < 6; i++) {
+			System.out.print(resultLotto[i]);
+			if(i < 5) System.out.print(",");
+			else break;
 		}
-		
-		//일치 여부 확인
-		
-		
 
-		
-		
-		
-		//내 로또 결과
+		// 7. 당첨결과 틀 제작(일치 개수)
+		int[] resultCount = new int[scanCount];
+		int resultCountEnum = 0;
+
+		// 8. 당첨번호 일치 개수 반환
+		for(int i=0; i<scanCount; i++){		// <한줄 : 한줄> 확인
+			resultCountEnum = 0;
+			for(int j=0; j<6; j++){ 		// <한칸 : 한줄> 확인
+				if(MyLotto[i][j].equals(resultLotto[j])){
+					resultCountEnum += 1;
+				}
+			}
+			resultCount[i] = resultCountEnum;
+		}
+
+		// 9. 당첨결과 출력
+		System.out.println();
 		System.out.println();
 		System.out.println("[내 로또 결과]");
-		for(int j = 0; j < scanCount; j++) {
-			String[] lottoArray = new String[6];
-			for(int i = 0; i < 6;) {
-				Random random = new Random();
-				int block = random.nextInt(45);
-				if(block == 0) continue;
-				String blockNumber = String.format("%02d", block); 
-				lottoArray[i] = blockNumber;
-				i++;
+		for (int i = 0; i < scanCount; i++) {
+			System.out.print(lottoTitle[i] + "   ");
+			for (int j = 0; j < 6; j++) {
+				if (j == 5) System.out.print(MyLotto[i][j]);
+				else System.out.print(MyLotto[i][j] + ",");
 			}
-			System.out.print("A" + "   ");
-			for(int i = 0; i < 6; i++) {
-				String matchCount = null;
-				if(i < 5) System.out.print(lottoArray[i] + ",");
-				else if(i == 5) System.out.println(lottoArray[i] + " => " + matchCount + "개 일치");
-				else System.out.print(lottoArray[i] + ",");
-			}
+			System.out.println(" => " + resultCount[i] + "개 일치");
 		}
-		
-		
-
 	}
-
 }

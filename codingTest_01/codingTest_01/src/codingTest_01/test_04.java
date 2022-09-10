@@ -28,9 +28,7 @@ public class test_04 {
 		
 		//앞자리 문자열 정의
 		String yearNumber = String.valueOf(year).substring(2);
-		String.valueOf(month);
 		String monthNumber = String.format("%02d", month);
-		String.valueOf(day);
 		String dayNumber = String.format("%02d", day);
 		
 		//뒷자리 문자열 정의
