@@ -4,13 +4,29 @@ import java.util.Scanner;
 
 public class subTest1 {
     public static void displayMenu() {
-        System.out.println("<<<<[메뉴선택]>>>>" +
-                System.lineSeparator() + "1. 회원 관리" +
-                System.lineSeparator() + "2. 과목 관리" +
-                System.lineSeparator() + "3. 수강 관리" +
-                System.lineSeparator() + "4. 결제 관리" +
-                System.lineSeparator() + "5. 종료");
+//        System.out.println("<<<<[메뉴선택]>>>>" +
+//                System.lineSeparator() + "1. 회원 관리" +
+//                System.lineSeparator() + "2. 과목 관리" +
+//                System.lineSeparator() + "3. 수강 관리" +
+//                System.lineSeparator() + "4. 결제 관리" +
+//                System.lineSeparator() + "5. 종료");
 
+        String[] menuList = {
+                "<<<<[메뉴선택]>>>>",
+                "1. 회원 관리",
+                "2. 과목 관리",
+                "3. 수강 관리",
+                "4. 결제 관리",
+                "5. 종료"
+        };
+
+//        for (int i =0; i < menuList.length; i++){
+//            System.out.println(menuList[i]);
+//        }
+
+        for(String menu : menuList){
+            System.out.println(menu);
+        }
     }
     public static void selectMenu(int inputMenu){
 
