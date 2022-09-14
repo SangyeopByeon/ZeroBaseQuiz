@@ -34,19 +34,15 @@ public class subTest1 {
                 System.out.println("입력값이 정확하지 않습니다.");
         }
     }
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        boolean exitYn = false;
 
+        int inputMenu;
         do {
             displayMenu();
-            int inputMenu = scanner.nextInt();
+            inputMenu = scanner.nextInt();
             selectMenu(inputMenu);
-
-            if (inputMenu == 5){
-                exitYn = true;
-            }
-        } while (!exitYn);
+        } while (inputMenu != 5);
     }
 }
