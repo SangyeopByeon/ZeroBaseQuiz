@@ -33,7 +33,7 @@ public class test_07 {
 				j++;
 			}
 			// 3-(2) 로또 순서 알파벳 출력
-			System.out.print(lottoTitle[i] + "   ");
+			System.out.print(lottoTitle[i] + "\t");
 			// 3-(3) 로또 번호 출력
 			for (int j = 0; j < 6; j++) {
 				if (j == 5) System.out.println(MyLotto[i][j]);
