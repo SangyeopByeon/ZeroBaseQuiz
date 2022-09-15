@@ -41,7 +41,8 @@ public class test_04 {
 			else  genderNumber = "4";
 		
 		Random random = new Random();
-		String lastNumber = String.valueOf(random.nextInt(999999));
+		int lastNumber = random.nextInt(999999);
+		String last = String.format("%06d",lastNumber);
 
 		// 앞자리, 뒷자리 각각 합치기
 		String frontNumber = yearNumber + monthNumber + dayNumber;
@@ -52,10 +53,5 @@ public class test_04 {
 		
 		//출력
 		System.out.println(residentRegistrationNumber);
-		
-		yearScan.close();
-		monthScan.close();
-		dayScan.close();
-		genderScan.close();
 	}
 }
