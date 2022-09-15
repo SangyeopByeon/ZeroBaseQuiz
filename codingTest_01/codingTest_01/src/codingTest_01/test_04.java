@@ -41,8 +41,8 @@ public class test_04 {
 			else  genderNumber = "4";
 		
 		Random random = new Random();
-		int lastNumber = random.nextInt(999999);
-		String last = String.format("%06d",lastNumber);
+		int last = random.nextInt(999999);
+		String lastNumber = String.format("%06d",last);
 
 		// 앞자리, 뒷자리 각각 합치기
 		String frontNumber = yearNumber + monthNumber + dayNumber;
