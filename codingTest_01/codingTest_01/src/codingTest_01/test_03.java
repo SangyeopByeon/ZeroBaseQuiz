@@ -49,10 +49,5 @@ public class test_03 {
 		else if(welfare.equals("y")) fee = normalFee;
 		
 		System.out.println("입장료: " + (int)fee);
-		
-		ageScan.close();
-		timeScan.close();
-		patriotScan.close();
-		welfareScan.close();
 	}
 }
